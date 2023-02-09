@@ -1,0 +1,27 @@
+.form-layout{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    /* background-color: aqua; */
+}
+.form-title-layout{
+    display: flex;
+    justify-content: space-between;
+    /* background-color: rgb(255, 0, 170); */
+}
+.form-data-layout{
+    display: flex;
+    width: fit-content;
+    margin: 10px;
+    flex-direction: column;
+    /* background-color: blueviolet; */
+}
+.form-element{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom:15px ;
+    /* background-color: brown; */
+}
+.form-element input{
+    margin-left: 10px;
+}

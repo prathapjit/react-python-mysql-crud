@@ -1,0 +1,142 @@
+.App{
+ margin: 15px;
+}
+
+.layout {
+  display: flex;
+  flex-direction: row;
+  /* background-color: aqua; */
+  margin: 15px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.layout-left{
+  width: 100%;
+}
+.layout-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  /* flex-grow: 2; */
+  /* background-color: rgb(255, 0, 221); */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form div {
+  margin-top: 20px;
+  /* background-color: blue; */
+  width: 250px;
+  text-align: end;
+}
+.form input {
+  height: 20px;
+}
+.form label {
+  font-weight: bold;
+  color: crimson;
+  /* font-weight: 20px; */
+}
+#submit {
+  text-align: center;
+  margin-left: 65px;
+}
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 90%;
+  margin-top: 10px;
+
+}
+thead{
+  background-color: #c4c7c7;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+/* tr:nth-child(even) {
+  background-color: #dddddd;
+} */
+
+.update-button{
+  background-color: aquamarine;
+  border: none;
+  cursor: pointer;
+  /* border: 1px solid aquamarine; */
+  /* border-radius: 5px; */
+
+}
+.delete-button{
+  background-color: #f98787;
+  border: none;
+  cursor: pointer;
+  /* border-radius: 5px; */
+  /* font-weight: bold; */
+}
+
+.add-user{
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: 7px solid #1cd9a5;
+  width: 100px;
+  text-align: center;
+  background-color: #1cd9a5;
+  border-radius: 5px;
+}
+/* .back-button{
+background-color: #f98787;
+border: 7px solid #f98787;
+
+} */
+
+.title{
+  border-bottom: 2px solid #c3c0c0;
+  color: #e50eb7;
+}
+.form-title{
+  text-align: start;
+  margin-left: 10px;
+  font-weight: bold;
+  color: #6fc3b3;
+}
+
+.form-nav{
+  display: flex;
+}
+.form-cancel{
+  width: 100%;
+  color: blueviolet;
+  margin-right: 35px;
+  text-align: end;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
