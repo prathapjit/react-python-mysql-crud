@@ -7,8 +7,10 @@ function App() {
 
   const [users, setUsers] = useState([]);
   const [showForm, setForm] = useState(false);
-  const [formTitle, setFormTitle] = useState('New User')
+  const [formTitle, setFormTitle] = useState('')
   const [value, setValue] = useState({ name: "", age: "", gender: "", city: "" })
+  // const[updateID, setUpdateID] = useState('')
+  let updateID: any
   const initialState = {
     name: '',
     age: '',
@@ -23,28 +25,58 @@ function App() {
 
 
   function reducer(currentState: any, action: any) {
-    console.log("get");
-
     switch (action.type) {
       case 'get':
         let promise = service.get("/api/get", null)
           .then((res: any) => {
-            setUsers(res);
+            setUsers(res.data);
           })
         break;
 
       case 'post':
-        console.log("post")
-        let postPromise = service.post("/api/insert", currentState)
+        console.log("post", value)
+        let postPromise = service.post(`/api/insert`, value)
           .then((res: any) => {
             // setUsers(res);
             console.log(res);
+            if (res.status == 200) {
+              handleSubmit(null, 'get');
+            }
           })
         break;
 
-      case 'update':
-        console.log("action", action);
+      case 'get-one':
+        // action.payLoad.preventDefault()
+        console.log("updateID-get-one", updateID)
+        let getOnePromise = service.get(`/api/update/${updateID}`, null)
+          .then((res: any) => {
+            if (res.status == 200) {
+              console.log("get-one-result", res.data)
+              // setUpdateID(value.id);
+              setValue({...res.data })
+              setFormTitle("Update User");
+              setForm(true);
+              console.log("jk",updateID)
+            }
+          })
         break;
+
+
+      case 'update':
+        action.payLoad.preventDefault()
+        console.log("updateID-update", updateID)
+
+        console.log("post-id", updateID, value)
+        let updatePromise = service.post(`/api/update/${updateID}`, value)
+          .then((res: any) => {
+            // setUsers(res);
+            console.log(res);
+            if (res.status == 200) {
+              handleSubmit(null, 'get');
+            }
+          })
+        break;
+
 
       case 'delete':
         let id = action.payLoad.target.accessKey
@@ -61,8 +93,9 @@ function App() {
   const handleSubmit = (event: any, value: any) => {
     let action = {
       type: value,
-      payLoad: event
+      payLoad: event,
     }
+    console.log("ACTION", event)
     reducer(value, action);
     // event.preventDefault();
   }
@@ -70,17 +103,14 @@ function App() {
   const handleTableEvent = (event: any, value: any) => {
     switch (value) {
       case 'add':
-        setFormTitle("Add User");
+        setFormTitle("New User");
         setForm(true);
         break;
 
-      case 'update':
+      case 'get-one':
         console.log("update", event.target.accessKey);
-        let filteredData: any = users.find((object: any) => { return object.id == event.target.accessKey })
-        setValue({ ...filteredData })
-        console.log("jk", filteredData)
-        setFormTitle("Update User");
-        setForm(true);
+        updateID=event.target.accessKey
+        handleSubmit(event, value)
         break;
     }
   }
@@ -112,12 +142,12 @@ function App() {
                   </tr>
                   </thead>
                   <tr onDoubleClick={(e: any) => { handleSubmit(e, "update") }} id={`row-${object.id}`} key={object.id}>{data}
-                    <td><button className='update-button' accessKey={object.id} onClick={(e: any) => handleTableEvent(e, "update")}>Update</button></td>
+                    <td><button className='update-button' accessKey={object.id} onClick={(e: any) => handleTableEvent(e, "get-one")}>Update</button></td>
                     <td><button className='delete-button' accessKey={object.id} onClick={(e: any) => handleSubmit(e, "delete")}>Delete</button></td>
                   </tr>
                 </> :
                   <tr id={`row-${object.id}`} key={object.id}>{data}
-                    <td><button className='update-button' accessKey={object.id} onClick={(e: any) => handleTableEvent(e, "update")}>Update</button></td>
+                    <td><button className='update-button' accessKey={object.id} onClick={(e: any) => handleTableEvent(e, "get-one")}>Update</button></td>
                     <td><button className='delete-button' accessKey={object.id} onClick={(e: any) => handleSubmit(e, "delete")}>Delete</button></td>
                   </tr>
               })
@@ -133,7 +163,7 @@ function App() {
             <>
               <div className='form-nav'>
                 <div>
-                  <form action='' target="_self" className='form' onSubmit={(e: any) => handleSubmit(e, 'post')}>
+                  <form accessKey={updateID} action='' target="_self" className='form' onSubmit={(e: any) => {handleSubmit(e, formTitle == "New User" ? 'post' : 'update')}}>
                     <div>
                       <p className='form-title'>{formTitle.toUpperCase()}</p>
                     </div>
@@ -159,7 +189,7 @@ function App() {
                   </form>
                 </div>
                 <div className='form-cancel'>
-                  <p className='back-button' onClick={() => {setValue({...initialState});setForm(false)}}>Back </p>
+                  <p className='back-button' onClick={() => { setValue({ ...initialState }); setForm(false) }}>Back </p>
                 </div>
               </div>
             </>
