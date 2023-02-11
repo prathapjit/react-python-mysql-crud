@@ -7,14 +7,6 @@ const getData = async (endPoint: any, params: any) => {
     await console.log("getResult", response);
     return await response
 }
-
-// const generateParams = (obj:any) =>{
-//     let final:any
-//     Object.keys(obj).forEach((ele:any) =>{
-
-//     })
-// }
-
 const postData = async (endPoint: any, params: any) => {
     let generateParams = `?name=${params.name}&age=${params.age}&gender=${params.gender}&city=${params.city}`
     console.log("POST", params)

@@ -19,7 +19,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("useEffect")
     handleSubmit(null, 'get');
   }, [])
 
@@ -34,11 +33,8 @@ function App() {
         break;
 
       case 'post':
-        console.log("post", value)
         let postPromise = service.post(`/api/insert`, value)
           .then((res: any) => {
-            // setUsers(res);
-            console.log(res);
             if (res.status == 200) {
               handleSubmit(null, 'get');
             }
@@ -47,16 +43,12 @@ function App() {
 
       case 'get-one':
         // action.payLoad.preventDefault()
-        console.log("updateID-get-one", updateID)
         let getOnePromise = service.get(`/api/update/${updateID}`, null)
           .then((res: any) => {
             if (res.status == 200) {
-              console.log("get-one-result", res.data)
-              // setUpdateID(value.id);
               setValue({...res.data })
               setFormTitle("Update User");
               setForm(true);
-              console.log("jk",updateID)
             }
           })
         break;
@@ -64,13 +56,9 @@ function App() {
 
       case 'update':
         action.payLoad.preventDefault()
-        console.log("updateID-update", updateID)
-
-        console.log("post-id", updateID, value)
         let updatePromise = service.post(`/api/update/${updateID}`, value)
           .then((res: any) => {
             // setUsers(res);
-            console.log(res);
             if (res.status == 200) {
               handleSubmit(null, 'get');
             }
@@ -95,7 +83,6 @@ function App() {
       type: value,
       payLoad: event,
     }
-    console.log("ACTION", event)
     reducer(value, action);
     // event.preventDefault();
   }
@@ -108,14 +95,12 @@ function App() {
         break;
 
       case 'get-one':
-        console.log("update", event.target.accessKey);
         updateID=event.target.accessKey
         handleSubmit(event, value)
         break;
     }
   }
 
-  // console.log(name, age, gender, city)
   return (
 
     <div className="App">
